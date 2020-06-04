@@ -1,0 +1,53 @@
+extends ../layouts/common
+block content
+    h1 Products
+
+    .d-flex.align-items-center
+        form(action="/products/search", method="GET", class="d-flex")
+            input(type="text", name="q", class="form-control") 
+            button(type="", class="btn btn-primary ml-2") Search
+    .flex-container(style="display: flex;width: 100%;flex-wrap: wrap;")
+        each product in products
+            .card(style='width: 17rem;margin-right: 5px;margin-bottom: 5px;')
+                img.card-img-top(src=product.image, alt='image')
+                .card-body
+                    h5.card-title= product.name
+                    h6.card-price(style="display: flex;") Price: 
+                        p(style="color: red;")= product.price
+                    p.card-text= product.description
+                    a.btn.btn-info(href='/products/' + product.id) View 
+                        svg.bi.bi-eye-fill(width='1em', height='1em', viewbox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+                            path(d='M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z')
+                            path(fill-rule='evenodd', d='M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z')
+                    a.btn.btn-success.ml-2(href="/cart/add/" + product.id) Add to cart 
+                        svg.bi.bi-cart3(width='1em', height='1em', viewbox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+                            path(fill-rule='evenodd', d='M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z')
+
+    nav(aria-label='Page navigation example', style="text-align: center;")
+        if ( pages > 0 )
+            ul.pagination
+                if(current == 1)
+                    li.page-item.disabled
+                        a.page-link(href='', aria-label='Previous')
+                            span(aria-hidden='true') &laquo;
+                if(current > 1)
+                    li.page-item
+                        a.page-link(href='/products/?page=' + (current-1), aria-label='Previous')
+                            span(aria-hidden='true') &laquo;
+                while n <= pages
+                    if( n == current) 
+                        li.page-item.active
+                            a.page-link(href='/products/?page=' + n)= n++
+                    else 
+                        li.page-item
+                            a.page-link(href='/products/?page=' + n)= n++
+                if(current == pages)
+                    li.page-item.disabled
+                        a.page-link(href='', aria-label='Next')
+                            span(aria-hidden='true') &raquo;
+                if(current < pages)
+                    li.page-item
+                        a.page-link(href='/products/?page=' + (current+1), aria-label='Next')
+                            span(aria-hidden='true') &raquo;
+
+        

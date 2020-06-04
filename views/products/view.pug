@@ -1,0 +1,11 @@
+extends ../layouts/common
+block content
+    h1 View product
+
+    .card(style='width: 100%;')
+        img.card-img-top(src=product.image, alt='image')
+        .card-body
+            h5.card-title= product.name
+            h6.card-price(style="display: flex;") Price: 
+                p(style="color: red;")= product.price
+            p.card-text= product.description
